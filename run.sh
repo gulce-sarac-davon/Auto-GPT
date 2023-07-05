@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-
 function find_python_command() {
-    if command -v python &> /dev/null
-    then
-        echo "python"
-    elif command -v python3 &> /dev/null
+    if command -v python3 &> /dev/null
     then
         echo "python3"
+    elif command -v python &> /dev/null
+    then
+        echo "python"
     else
         echo "Python not found. Please install Python."
         exit 1
@@ -14,6 +13,7 @@ function find_python_command() {
 }
 
 PYTHON_CMD=$(find_python_command)
+
 
 if $PYTHON_CMD -c "import sys; sys.exit(sys.version_info < (3, 10))"; then
     $PYTHON_CMD scripts/check_requirements.py requirements.txt
